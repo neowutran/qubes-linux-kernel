@@ -479,10 +479,15 @@ mv  %buildroot/lib/firmware-all %buildroot/lib/firmware/%kernelrelease
 
 # Prepare initramfs for Qubes VM
 mkdir -p %buildroot/%vm_install_dir
+
+# Neowutran: I do not understand why I need to create a empty file instead 
+# of using /dev/null. Maybe a new release of dracut that change the previous
+# behavior ?
+touch /tmp/null
 PATH="/sbin:$PATH" dracut --nomdadmconf --nolvmconf \
     --kmoddir %buildroot/lib/modules/%kernelrelease \
     --modules "kernel-modules qubes-vm-simple" \
-    --conf /dev/null --confdir /var/empty \
+    --conf /tmp/null --confdir /var/empty \
     -d "xenblk xen-blkfront cdrom ext4 jbd2 crc16 dm_snapshot" \
     %buildroot/%vm_install_dir/initramfs %kernelrelease || exit 1
 

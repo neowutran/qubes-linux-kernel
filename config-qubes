@@ -9,6 +9,14 @@
 CONFIG_EXPERT=y
 
 
+#############################################
+## XEN OPTIONS
+CONFIG_INTEL_IOMMU=y
+CONFIG_AMD_IOMMU=y
+CONFIG_AMD_IOMMU_V2=y
+CONFIG_X86_X2APIC=y
+CONFIG_IRQ_REMAP=y
+
 ################################################################################
 ## Use xz to save space on /boot
 
@@ -29,8 +37,6 @@ CONFIG_IKCONFIG_PROC=y
 
 CONFIG_GCC_PLUGINS=y
 CONFIG_GCC_PLUGIN_LATENT_ENTROPY=y
-CONFIG_GCC_PLUGIN_STRUCTLEAK=y
-CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL=y
 ## XXX: What's about RANDSTRUCT?
 
 ## Those depend on CONFIG_EXPERT
@@ -158,16 +164,3 @@ CONFIG_INTEL_PMC_CORE=m
 
 # CONFIG_XEN_VIRTIO is not set
 
-################################################################################
-## TODO: from diff to old config
-
-## CONFIG_X86_AMD_PLATFORM_DEVICE=y
-##
-## # CONFIG_X86_MCELOG_LEGACY is not set
-## # CONFIG_X86_MCE_INJECT is not set
-##
-## CONFIG_X86_BOOTPARAM_MEMORY_CORRUPTION_CHECK=y
-##
-## sensors from 0f976d972a1671a303fad30a5e690304b0b82ee0
-##
-## Intel ME driver e0f8e9ca81b80d897b190f48a4af80eff3198cb1
