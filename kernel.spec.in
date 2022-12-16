@@ -492,7 +492,7 @@ modules_dep=$(lsinitrd "%buildroot/%vm_install_dir/initramfs" \
 if [ -z "$modules_dep" ]; then
     tmpdir=$(mktemp -d)
     zcat "%buildroot/%vm_install_dir/initramfs" | cpio -imd -D "$tmpdir" || exit 1
-    mv "$tmpdir"/%buildroot/lib/modules/%kernelrelease+/kernel \
+    mv "$tmpdir"/%buildroot/lib/modules/%kernelrelease/kernel \
         "$tmpdir"/lib/modules/%kernelrelease/ || exit 1
     depmod -F %buildroot/boot/System.map-%kernelrelease \
         -b "$tmpdir" -a %kernelrelease || exit 1
