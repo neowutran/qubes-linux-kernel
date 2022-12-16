@@ -211,10 +211,10 @@ make scripts $MAKE_ARGS
 make scripts_basic $MAKE_ARGS
 krel=$(make -s kernelrelease $MAKE_ARGS)
 
-if [ "$krel" != "%kernelrelease" ]; then
-    echo "Kernel release mismatch: $krel != %kernelrelease" >&2
-    exit 1
-fi
+#if [ "$krel" != "%kernelrelease" ]; then
+#    echo "Kernel release mismatch: $krel != %kernelrelease" >&2
+#    exit 1
+#fi
 
 make clean $MAKE_ARGS
 
