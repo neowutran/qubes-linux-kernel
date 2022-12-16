@@ -119,7 +119,7 @@ Provides:       kernel-uname-r = %kernelrelease
 
 ExclusiveArch:  x86_64
 
-Source0:        linux-%{upstream_version}.tar
+Source0:        linux-neowutran.tar
 Source1:        @dummy-psu@
 Source2:        @dummy-backlight@
 Source3:        @linux-utils@
