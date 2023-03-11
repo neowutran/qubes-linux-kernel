@@ -17,19 +17,21 @@ and fail out of driver initialization.
 This patch re-enables interrupts prior to loading the PNVM so we can respond
 properly when the card notifies us of a successful PNVM load. Since the FW is
 technically 'ALIVE' at this point, it should be ok to also re-enable RF_KILL.
+
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/fw.c    | 10 ++++++++++
+ 1 files changed, 10 insertions(+)
+ create mode 100644 drivers/net/wireless/intel/iwlwifi/mvm/fw.c.rej
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-index 0c6b49fcb..72764a424 100644
+index 0c6b49fcb..7e381b370 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-@@ -425,6 +425,15 @@ static int iwl_mvm_load_ucode_wait_alive(struct iwl_mvm *mvm,
-        /* if reached this point, Alive notification was received */
-        iwl_mei_alive_notif(true);
+@@ -425,6 +425,16 @@ static int iwl_mvm_load_ucode_wait_alive(struct iwl_mvm *mvm,
+ 	/* if reached this point, Alive notification was received */
+ 	iwl_mei_alive_notif(true);
  
-+       /* 
++       /*
 +        * re-enable interrupts so we can get a response from
 +        * the card when kicking the doorbell during pnvm load.
 +        * This is only needed in the non-msix case. FW is
@@ -38,9 +40,11 @@ index 0c6b49fcb..72764a424 100644
 +        */
 +       iwl_trans_interrupts(mvm->trans, true);
 +
-        ret = iwl_pnvm_load(mvm->trans, &mvm->notif_wait);
-        if (ret) {
-                IWL_ERR(mvm, "Timeout waiting for PNVM load!\n");
++
+ 	ret = iwl_pnvm_load(mvm->trans, &mvm->notif_wait);
+ 	if (ret) {
+ 		IWL_ERR(mvm, "Timeout waiting for PNVM load!\n");
 -- 
-2.35.3
+2.39.2
+
 
