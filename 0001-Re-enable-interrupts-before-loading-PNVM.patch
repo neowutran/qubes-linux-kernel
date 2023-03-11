@@ -22,25 +22,25 @@ technically 'ALIVE' at this point, it should be ok to also re-enable RF_KILL.
  1 file changed, 9 insertions(+)
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-index f041e77af059..ec982ddce196 100644
+index 0c6b49fcb..72764a424 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-@@ -404,6 +404,15 @@ static int iwl_mvm_load_ucode_wait_alive(struct iwl_mvm *mvm,
- 		return -EIO;
- 	}
+@@ -425,6 +425,15 @@ static int iwl_mvm_load_ucode_wait_alive(struct iwl_mvm *mvm,
+        /* if reached this point, Alive notification was received */
+        iwl_mei_alive_notif(true);
  
-+	/* 
-+	 * re-enable interrupts so we can get a response from
-+	 * the card when kicking the doorbell during pnvm load.
-+	 * This is only needed in the non-msix case. FW is
-+	 * technically alive at this point so re-enabling rf-kill
-+	 * interrupt is probably ok.
-+	 */
-+	iwl_trans_interrupts(mvm->trans, true);
++       /* 
++        * re-enable interrupts so we can get a response from
++        * the card when kicking the doorbell during pnvm load.
++        * This is only needed in the non-msix case. FW is
++        * technically alive at this point so re-enabling rf-kill
++        * interrupt is probably ok.
++        */
++       iwl_trans_interrupts(mvm->trans, true);
 +
- 	ret = iwl_pnvm_load(mvm->trans, &mvm->notif_wait);
- 	if (ret) {
- 		IWL_ERR(mvm, "Timeout waiting for PNVM load!\n");
+        ret = iwl_pnvm_load(mvm->trans, &mvm->notif_wait);
+        if (ret) {
+                IWL_ERR(mvm, "Timeout waiting for PNVM load!\n");
 -- 
 2.35.3
 
